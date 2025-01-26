@@ -1,5 +1,6 @@
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
 // Array para almacenar los nombres de los amigos
+// Array para almacenar los nombres de los amigos
 let amigos = [];
 
 // Función para agregar un amigo a la lista
@@ -44,32 +45,44 @@ function sortearAmigo() {
         return;
     }
 
-    // Creamos una copia del array de amigos y lo barajamos
-    const amigosSorteados = [...amigos];
-    const resultados = [];
+    // Elegir un amigo al azar
+    const amigoSecreto = amigos[Math.floor(Math.random() * amigos.length)];
 
-    // Aseguramos que nadie se asigne a sí mismo
-    amigosSorteados.sort(() => Math.random() - 0.5); // Barajar
+    // Elegir un amigo que no sea el mismo que el anterior
+    let amigoReceptor;
+    do {
+        amigoReceptor = amigos[Math.floor(Math.random() * amigos.length)];
+    } while (amigoSecreto === amigoReceptor);
 
-    for (let i = 0; i < amigos.length; i++) {
-        const amigoSecret = amigosSorteados[i];
-        const amigoReceptor = amigosSorteados[(i + 1) % amigosSorteados.length]; // Evitar que se asignen a sí mismos
-        resultados.push(`${amigoSecret} le dará un regalo a ${amigoReceptor}`);
-    }
-
-    // Mostrar los resultados en el HTML
-    mostrarResultados(resultados);
+    // Mostrar el resultado en el HTML
+    mostrarResultado(amigoSecreto, amigoReceptor);
 }
 
-// Función para mostrar los resultados del sorteo
-function mostrarResultados(resultados) {
+// Función para mostrar el resultado del sorteo
+function mostrarResultado(amigoSecreto, amigoReceptor) {
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.innerHTML = ''; // Limpiar resultados anteriores
 
-    resultados.forEach((resultado) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = resultado;
-        resultadoDiv.appendChild(listItem);
-    });
+    const resultado = `${amigoSecreto} le dará un regalo a ${amigoReceptor}`;
+    const listItem = document.createElement('li');
+    listItem.textContent = resultado;
+    resultadoDiv.appendChild(listItem);
 }
 
+// Función para limpiar la lista de amigos
+function limpiarLista() {
+    amigos = [];  // Vaciar el array de amigos
+    actualizarListaAmigos();  // Actualizar la vista
+}
+
+// Función para limpiar los resultados del sorteo
+function limpiarResultado() {
+    const resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.innerHTML = ''; // Limpiar los resultados del sorteo
+}
+
+// Función para limpiar los resultados del sorteo
+function limpiarResultado() {
+    const resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.innerHTML = ''; // Limpiar los resultados del sorteo
+}
